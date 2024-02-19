@@ -923,6 +923,37 @@ declare namespace OracleDB {
         execute<T>(sql: string, callback: (error: DBError, result: Result<T>) => void): void;
 
         /**
+         * This call executes a single SQL or PL/SQL statement.
+         *
+         * @param sql The SQL object that has statement to be executed and bindParams.
+         * The statement may contain bind parameters.
+         * The SQL object contains bind parameters if statement has it.
+         *
+         * @see https://oracle.github.io/node-oracledb/doc/api.html#sqlexecution
+         * @see https://github.com/blakeembrey/sql-template-tag
+         */
+        execute<T>(sql: object): Promise<Result<T>>;
+        execute<T>(sql: object, callback: (error: DBError, result: Result<T>) => void): void;
+
+        /**
+         * This call executes a single SQL or PL/SQL statement.
+         *
+         * @param sql The SQL object that has statement to be executed and bindParams.
+         * The statement may contain bind parameters.
+         * The SQL object contains bind parameters if statement has it.
+         * @param options This is an optional parameter to execute() that may be used to control statement execution.
+         *
+         * @see https://oracle.github.io/node-oracledb/doc/api.html#sqlexecution
+         * @see https://github.com/blakeembrey/sql-template-tag
+         */
+        execute<T>(sql: object, options: ExecuteOptions): Promise<Result<T>>;
+        execute<T>(
+            sql: object,
+            options: ExecuteOptions,
+            callback: (error: DBError, result: Result<T>) => void,
+        ): void;
+
+        /**
          * This method allows sets of data values to be bound to one DML or PL/SQL statement for execution.
          * It is like calling connection.execute() multiple times but requires fewer round-trips.
          * This is an efficient way to handle batch changes, for example when inserting or updating multiple rows.
@@ -1518,7 +1549,7 @@ declare namespace OracleDB {
          * The stack trace displays only the application backtrace and not the driver’s internal frames or functions.
          * See Increasing the Stack Trace Limit to understand how to increase the number of stack frames displayed in a trace.
          */
-        stack?: string | undefined;
+        stack?: string;
     }
 
     /**
@@ -1789,6 +1820,45 @@ declare namespace OracleDB {
          */
         getData(): Promise<string | Buffer>;
         getData(callback: (error: DBError, data: string | Buffer) => void): void;
+
+        /**
+         * Return all the LOB data starting from an absolute offset from the begining of the LOB.
+         * CLOBs and NCLOBs will be returned as strings. BLOBs will be returned as a Buffer.
+         *
+         * This method is usable for LOBs up to 1 GB in length.
+         *
+         * For queries returning LOB columns, it can be more efficient to use fetchAsString, fetchAsBuffer, or fetchInfo instead of lob.getData().
+         *
+         * Note it is an asynchronous method and requires a round-trip to the database.
+         *
+         * @since 4.0
+         *
+         * @param offset The absolute offset is the byte position for BLOB and character position for CLOB.
+         *
+         */
+
+        getData(offset: number): Promise<string | Buffer>;
+        getData(offset: number, callback: (error: DBError, data: string | Buffer) => void): void;
+
+        /**
+         * Return all the LOB data up to length bytes or characters starting from an absolute offset from the begining of the LOB.
+         * CLOBs and NCLOBs will be returned as strings. BLOBs will be returned as a Buffer.
+         *
+         * This method is usable for LOBs up to 1 GB in length.
+         *
+         * For queries returning LOB columns, it can be more efficient to use fetchAsString, fetchAsBuffer, or fetchInfo instead of lob.getData().
+         *
+         * Note it is an asynchronous method and requires a round-trip to the database.
+         *
+         * @since 4.0
+         *
+         * @param offset The absolute offset is the byte position for BLOB and character position for CLOB.
+         * @param length The length number of bytes for BLOB or number of characters for CLOB are returned starting from offset.
+         *
+         */
+
+        getData(offset: number, length: number): Promise<string | Buffer>;
+        getData(offset: number, length: number, callback: (error: DBError, data: string | Buffer) => void): void;
     }
 
     /**
