@@ -1833,7 +1833,8 @@ declare namespace OracleDB {
          *
          * @since 4.0
          *
-         * @param offset The absolute offset is the byte position for BLOB and character position for CLOB.
+         * @param offset The absolute offset is the byte position for BLOB and BFILE type LOBs and in UCS-2 code points for CLOB and NCLOB type LOBs. UCS-2 code points are equivalent to characters for all but supplemental characters.
+         *
          *
          */
 
@@ -1852,8 +1853,8 @@ declare namespace OracleDB {
          *
          * @since 4.0
          *
-         * @param offset The absolute offset is the byte position for BLOB and character position for CLOB.
-         * @param length The length number of bytes for BLOB or number of characters for CLOB are returned starting from offset.
+         * @param offset The absolute offset is the byte position for BLOB and BFILE type LOBs and in UCS-2 code points for CLOB and NCLOB type LOBs. UCS-2 code points are equivalent to characters for all but supplemental characters.
+         * @param length The number of bytes for BLOB and BFILE type LOBs and in UCS-2 code points for CLOB and NCLOB type LOBs returned starting from offset. UCS-2 code points are equivalent to characters for all but supplemental characters.
          *
          */
 
