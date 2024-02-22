@@ -931,6 +931,7 @@ declare namespace OracleDB {
          *
          * @see https://oracle.github.io/node-oracledb/doc/api.html#sqlexecution
          * @see https://github.com/blakeembrey/sql-template-tag
+         * @see https://github.com/oracle/node-oracledb/issues/1629
          */
         execute<T>(sql: object): Promise<Result<T>>;
         execute<T>(sql: object, callback: (error: DBError, result: Result<T>) => void): void;
