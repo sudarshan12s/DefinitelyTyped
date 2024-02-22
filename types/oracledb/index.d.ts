@@ -1822,8 +1822,12 @@ declare namespace OracleDB {
         getData(callback: (error: DBError, data: string | Buffer) => void): void;
 
         /**
-         * Return all the LOB data starting from an absolute offset from the begining of the LOB.
-         * CLOBs and NCLOBs will be returned as strings. BLOBs will be returned as a Buffer.
+         * Returns a portion (or all) of the data in the LOB object. Note that
+         * the offset is in bytes for BLOB and BFILE type LOBs and
+         * in UCS-2 code points for CLOB and NCLOB type LOBs. UCS-2 code points
+         * are equivalent to characters for all but supplemental characters.
+         * If supplemental characters are in the LOB, the offset will
+         * have to be chosen carefully to avoid splitting a character.
          *
          * This method is usable for LOBs up to 1 GB in length.
          *
@@ -1833,7 +1837,7 @@ declare namespace OracleDB {
          *
          * @since 4.0
          *
-         * @param offset The absolute offset is the byte position for BLOB and BFILE type LOBs and in UCS-2 code points for CLOB and NCLOB type LOBs. UCS-2 code points are equivalent to characters for all but supplemental characters.
+         * @param offset The absolute offset inside LOB.
          *
          *
          */
@@ -1842,7 +1846,12 @@ declare namespace OracleDB {
         getData(offset: number, callback: (error: DBError, data: string | Buffer) => void): void;
 
         /**
-         * Return all the LOB data up to length bytes or characters starting from an absolute offset from the begining of the LOB.
+         * Returns a portion (or all) of the data in the LOB object. Note that
+         * the amount and offset are in bytes for BLOB and BFILE type LOBs and
+         * in UCS-2 code points for CLOB and NCLOB type LOBs. UCS-2 code points
+         * are equivalent to characters for all but supplemental characters.
+         * If supplemental characters are in the LOB, the offset and amount will
+         * have to be chosen carefully to avoid splitting a character.
          * CLOBs and NCLOBs will be returned as strings. BLOBs will be returned as a Buffer.
          *
          * This method is usable for LOBs up to 1 GB in length.
@@ -1853,13 +1862,13 @@ declare namespace OracleDB {
          *
          * @since 4.0
          *
-         * @param offset The absolute offset is the byte position for BLOB and BFILE type LOBs and in UCS-2 code points for CLOB and NCLOB type LOBs. UCS-2 code points are equivalent to characters for all but supplemental characters.
-         * @param length The number of bytes for BLOB and BFILE type LOBs and in UCS-2 code points for CLOB and NCLOB type LOBs returned starting from offset. UCS-2 code points are equivalent to characters for all but supplemental characters.
+         * @param offset The absolute offset inside LOB.
+         * @param amount The number of bytes(BLOB) or characters(CLOB) returned starting from offset.
          *
          */
 
-        getData(offset: number, length: number): Promise<string | Buffer>;
-        getData(offset: number, length: number, callback: (error: DBError, data: string | Buffer) => void): void;
+        getData(offset: number, amount: number): Promise<string | Buffer>;
+        getData(offset: number, amount: number, callback: (error: DBError, data: string | Buffer) => void): void;
     }
 
     /**
