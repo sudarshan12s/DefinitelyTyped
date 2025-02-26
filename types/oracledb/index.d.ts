@@ -4719,11 +4719,31 @@ declare namespace OracleDB {
         onEndRoundTrip(traceContext?: TraceContext): void;
     }
 
+    /*
+     * Set the class which implements the hooks in TraceHandlerBase
+     * class.
+     */
+    function setTraceInstance(obj?: TraceHandlerBase): void;
+
+    /*
+     * Get the class which implemented the hooks in TraceHandlerBase
+     * class.
+     */
+    function getTraceInstance(): TraceHandlerBase | undefined;
+
+    /*
+     * Verify if Tracing is enabled.
+     */
+    function isEnabled(): boolean | undefined;
+
     /**
      * traceHandler property containing the TraceHandlerBase class
      */
     interface traceHandler {
         TraceHandlerBase: typeof TraceHandlerBase;
+        setTraceInstance(obj?: TraceHandlerBase): void;
+        getTraceInstance(): TraceHandlerBase | undefined;
+        isEnabled(): boolean | undefined;
     }
     const traceHandler: traceHandler;
 }
