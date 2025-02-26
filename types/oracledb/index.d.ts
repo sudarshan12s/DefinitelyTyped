@@ -4667,6 +4667,67 @@ declare namespace OracleDB {
     function startup(creds: DBCredentials, opts?: StartupOptions): Promise<void>;
     function startup(creds: DBCredentials, opts: StartupOptions, cb: (err: Error) => void): void;
     function startup(creds: DBCredentials, cb: (err: Error) => void): void;
+
+    /**
+     * Type representing the trace context object.
+     */
+    type TraceContext = Record<string, any>;
+
+    /**
+     * Base class for handling tracing.
+     */
+    class TraceHandlerBase {
+        constructor();
+
+        /**
+         * Checks if sending traces is enabled.
+         */
+        isEnabled(): boolean;
+
+        /**
+         * Enables sending traces.
+         */
+        enable(): void;
+
+        /**
+         * Disables sending traces.
+         */
+        disable(): void;
+
+        /**
+         * Called before invoking a public async method.
+         * @param traceContext  input/output trace context object.
+         */
+        onEnterFn(traceContext?: TraceContext): void;
+
+        /**
+         * Called after invoking a public async method.
+         * @param traceContext input/output trace context object.
+         */
+        onExitFn(traceContext?: TraceContext): void;
+
+        /**
+         * Called when a round trip is begun.
+         * @param traceContext input/output trace context object.
+         */
+        onBeginRoundTrip(traceContext?: TraceContext): void;
+
+        /**
+         * Called when a round trip has ended.
+         * @param traceContext input/output trace context object.
+         */
+        onEndRoundTrip(traceContext?: TraceContext): void;
+    }
+
+    /**
+     * traceHandler property containing the TraceHandlerBase class
+     *
+     */
+    interface traceHandler {
+        TraceHandlerBase: typeof TraceHandlerBase;
+    }
+    const traceHandler: traceHandler;
+
 }
 
 export = OracleDB;
