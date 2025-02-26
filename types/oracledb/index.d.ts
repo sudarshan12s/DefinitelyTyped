@@ -4721,13 +4721,11 @@ declare namespace OracleDB {
 
     /**
      * traceHandler property containing the TraceHandlerBase class
-     *
      */
     interface traceHandler {
         TraceHandlerBase: typeof TraceHandlerBase;
     }
     const traceHandler: traceHandler;
-
 }
 
 export = OracleDB;
