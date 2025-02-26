@@ -4670,11 +4670,15 @@ declare namespace OracleDB {
 
     /**
      * Type representing the trace context object.
+     *
+     * @since 6.7.0
      */
     type TraceContext = Record<string, any>;
 
     /**
      * Base class for handling tracing.
+     *
+     * @since 6.7.0
      */
     class TraceHandlerBase {
         constructor();
@@ -4720,24 +4724,32 @@ declare namespace OracleDB {
     }
 
     /*
-     * Set the class which implements the hooks in TraceHandlerBase
+     * Set the derived object which implements the hooks in TraceHandlerBase
      * class.
+     *
+     * @since 6.7.0
      */
     function setTraceInstance(obj?: TraceHandlerBase): void;
 
     /*
-     * Get the class which implemented the hooks in TraceHandlerBase
+     * Get the derived object which implemented the hooks in TraceHandlerBase
      * class.
+     *
+     * @since 6.7.0
      */
     function getTraceInstance(): TraceHandlerBase | undefined;
 
     /*
      * Verify if Tracing is enabled.
+     *
+     * @since 6.7.0
      */
     function isEnabled(): boolean | undefined;
 
     /**
-     * traceHandler property containing the TraceHandlerBase class
+     * traceHandler property containing the TraceHandlerBase class.
+     *
+     * @since 6.7.0
      */
     interface traceHandler {
         TraceHandlerBase: typeof TraceHandlerBase;
